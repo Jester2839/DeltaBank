@@ -1,13 +1,45 @@
+import accounts.BankAccount;
+import accounts.CurrentAccount;
+import accounts.StudentAccount;
+import pearson.AccountOwner;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+    AccountOwner accountOwner = new AccountOwner("Petr", "Banan");
+    accountOwner.setLastName("Bananos");
+
+    BankAccount bankAccount = new CurrentAccount(accountOwner, "123", 100);
+    BankAccount studenAccount = new StudentAccount(accountOwner, "123", 300, "Delta");
+
+
+    List<BankAccount> bankAccounts = new ArrayList<>();
+    bankAccounts.add(bankAccount);
+    bankAccounts.add(studenAccount);
+
+    for (BankAccount account: bankAccounts){
+        if(account instanceof  StudentAccount) {
+            StudentAccount stdAccount = (StudentAccount) account;
+            IO.println("school: " + stdAccount.getSchoolName());
+        }
     }
+
+
+
+    studenAccount.add(400);
+    studenAccount.add(100);
+    studenAccount.add(750);
+
+    printBalnace(studenAccount);
+
+    studenAccount.sub(150);
+    studenAccount.sub(20);
+    studenAccount.sub(1000);
+
+    printBalnace(studenAccount);
+}
+
+private static void printBalnace(BankAccount bankAccount){
+    IO.println("blance " + bankAccount.getBalance());
 }
