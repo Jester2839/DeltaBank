@@ -28,4 +28,13 @@ public class StudentAccount extends BankAccount{
     public String getSchoolName() {
         return schoolName;
     }
+
+    @Override
+    public void sub(double amount) {
+        if(getBalance() - amount < -5000){
+            throw new IllegalArgumentException("Amount cannot go under 5000");
+        }
+
+        super.sub(amount);
+    }
 }
