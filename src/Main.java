@@ -19,6 +19,12 @@ void main() {
     bankAccounts.add(studenAccount);
 
     for (BankAccount account: bankAccounts){
+        if (account instanceof InterestPoint){
+            ((InterestPoint)account).calculateInterest();
+        }
+    }
+
+    for (BankAccount account: bankAccounts){
         if(account instanceof  StudentAccount) {
             StudentAccount stdAccount = (StudentAccount) account;
             IO.println("school: " + stdAccount.getSchoolName());
