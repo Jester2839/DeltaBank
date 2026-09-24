@@ -34,24 +34,8 @@ public abstract class BankAccount {
     public double getBalance() {
         return balance;
     }
-
-
-    public void add(double amount){
-        if (amount < 0){
-            throw new IllegalArgumentException("Amount cannot be negative");
-        }
-
-        this.balance += amount;
-    }
-    public void sub(double amount){
-
-        notifierService.notify("DEBUG: amount: " + amount);
-
-        if (amount < 0){
-            throw new IllegalArgumentException("Amount cannot be negative");
-        }
-
-        this.balance -= amount;
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
 }

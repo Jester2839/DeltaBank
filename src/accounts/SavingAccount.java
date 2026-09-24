@@ -15,15 +15,6 @@ public class SavingAccount extends BankAccount implements InterestPoint{
     }
 
     @Override
-    public void add(double amount) {
-
-        double bonusAmount = amount * SUPER_ADD;
-
-        super.add(bonusAmount);
-        super.add(amount);
-    }
-
-    @Override
     public void calculateInterest(){
         double interest = getBalance() + INTEREST_RATE;
     }

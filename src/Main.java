@@ -1,5 +1,7 @@
 import accounts.*;
 import pearson.AccountOwner;
+import transfer.DepositTransferService;
+import transfer.WithdrawTransferService;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -33,29 +35,11 @@ void main() {
 
     IO.println();
 
-    studenAccount.add(400);
-    studenAccount.add(100);
-    studenAccount.add(750);
-    printBalnace(studenAccount);
-    studenAccount.sub(150);
-    studenAccount.sub(20);
-    studenAccount.sub(1000);
-    printBalnace(studenAccount);
+    DepositTransferService depositTransferService = new DepositTransferService();
+    WithdrawTransferService withdrawTransferService = new WithdrawTransferService();
 
-    IO.println();
 
-    studenAccount.sub(1000);
-    printBalnace(studenAccount);
 
-    IO.println();
-
-    savingAccount.add(100);
-    printBalnace(savingAccount);
-
-    IO.println();
-
-    businessAccount.sub(100);
-    printBalnace(businessAccount);
 }
 
 private static void printBalnace(BankAccount bankAccount){
