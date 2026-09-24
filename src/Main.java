@@ -38,7 +38,7 @@ void main() {
 
     IO.println();
 
-    studenAccount.sub(150);
+    studenAccount.sub(1000);
     printBalnace(studenAccount);
 
     IO.println();

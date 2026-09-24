@@ -31,6 +31,7 @@ public class StudentAccount extends BankAccount{
 
     @Override
     public void sub(double amount) {
+
         if(getBalance() - amount < -5000){
             throw new IllegalArgumentException("Amount cannot go under 5000");
         }

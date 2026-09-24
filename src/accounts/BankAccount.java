@@ -3,6 +3,9 @@ package accounts;
 // 2010
 // 2102405518
 
+import notifier.ConsoleNotifierService;
+import notifier.EmailNotifierService;
+import notifier.NotifierService;
 import pearson.AccountOwner;
 
 import java.util.UUID;
@@ -13,6 +16,7 @@ public abstract class BankAccount {
     private AccountOwner accountOwner;
     private String accountNumber;
     private double balance;
+    private NotifierService notifierService = new EmailNotifierService();
 
 
     // 2 konstruktory pro to aby se pri vytvoreni objektu mohl ale nemusel zadavat balance
@@ -40,6 +44,9 @@ public abstract class BankAccount {
         this.balance += amount;
     }
     public void sub(double amount){
+
+        notifierService.notify("DEBUG: amount: " + amount);
+
         if (amount < 0){
             throw new IllegalArgumentException("Amount cannot be negative");
         }
