@@ -11,7 +11,7 @@ void main() {
     accountOwner.setLastName("Bananos");
 
     BankAccount bankAccount = new CurrentAccount(accountOwner, "123", 100);
-    BankAccount studenAccount = new StudentAccount(accountOwner, "123", 300, "Delta");
+    BankAccount studenAccount = new StudentAccount(accountOwner, "123", 500, "Delta");
     BankAccount savingAccount = new SavingAccount(accountOwner, "123", 1000);
     BankAccount businessAccount = new BusinessAccount(accountOwner, "123", 1000);
 
