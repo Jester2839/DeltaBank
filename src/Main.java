@@ -1,6 +1,10 @@
 import accounts.*;
+import notifier.ConsoleNotifierService;
+import notifier.EmailNotifierService;
+import notifier.NotifierService;
 import pearson.AccountOwner;
 import transfer.DepositTransferService;
+import transfer.TransferTransferService;
 import transfer.WithdrawTransferService;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -37,11 +41,37 @@ void main() {
 
     DepositTransferService depositTransferService = new DepositTransferService();
     WithdrawTransferService withdrawTransferService = new WithdrawTransferService();
+    TransferTransferService transferTransferService = new TransferTransferService();
 
+    // cely vystup jde pres notifier - staci vymenit implementaci a vystup vypada jinak
+    NotifierService consoleNotifierService = new ConsoleNotifierService();
+    NotifierService emailNotifierService = new EmailNotifierService();
 
+    consoleNotifierService.notify("--- Prevod 100 z business account (poplatek 0.3%) ---");
+    printBalance("business pred", businessAccount, consoleNotifierService);
+    printBalance("current pred", bankAccount, consoleNotifierService);
+    transferTransferService.transfer(businessAccount, bankAccount, 100);
+    printBalance("business po", businessAccount, consoleNotifierService);
+    printBalance("current po", bankAccount, consoleNotifierService);
+    emailNotifierService.notify("Prevod 100 z business account na current account probehl");
 
+    IO.println();
+
+    consoleNotifierService.notify("--- Prevod 200 ze student account (bez poplatku) ---");
+    transferTransferService.transfer(studenAccount, savingAccount, 200);
+    printBalance("student po", studenAccount, consoleNotifierService);
+    printBalance("saving po", savingAccount, consoleNotifierService);
+
+    IO.println();
+
+    consoleNotifierService.notify("--- Neplatny vstup (prevod na stejny ucet) ---");
+    try {
+        transferTransferService.transfer(bankAccount, bankAccount, 50);
+    } catch (IllegalArgumentException e) {
+        emailNotifierService.notify("CHYBA: " + e.getMessage());
+    }
 }
 
-private static void printBalnace(BankAccount bankAccount){
-    IO.println("blance " + bankAccount.getBalance());
+private static void printBalance(String label, BankAccount bankAccount, NotifierService notifierService){
+    notifierService.notify(label + ": " + bankAccount.getBalance());
 }
