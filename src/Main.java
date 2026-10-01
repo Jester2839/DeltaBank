@@ -81,7 +81,6 @@ void main() {
         emailNotifierService.notify("CHYBA: " + e.getMessage());
     }
 
-
 }
 
 private static void printBalance(String label, BankAccount bankAccount, NotifierService notifierService){
