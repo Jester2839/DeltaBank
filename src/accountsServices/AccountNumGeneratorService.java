@@ -58,11 +58,4 @@ public class AccountNumGeneratorService {
 
         return accountBuilder.toString() + "/" + bankCode;
     }
-
-    public static void main(String[] args) {
-        // Ukázka generování 5 platných účtů
-        for (int i = 0; i < 5; i++) {
-            System.out.println(accNumGen());
-        }
-    }
 }
