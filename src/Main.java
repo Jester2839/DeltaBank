@@ -1,4 +1,5 @@
 import accounts.*;
+import accountsServices.AccountNumGeneratorService;
 import notifier.ConsoleNotifierService;
 import notifier.EmailNotifierService;
 import notifier.NotifierService;
@@ -17,14 +18,20 @@ void main() {
     AccountOwner accountOwner = accountOwnerFactory.createAccountOwner("Petr", "Banan");
     accountOwner.setLastName("Bananos");
 
-    BankAccount bankAccount = new CurrentAccount(accountOwner, "123", 100);
-    BankAccount studenAccount = new StudentAccount(accountOwner, "123", 500, "Delta");
-    BankAccount savingAccount = new SavingAccount(accountOwner, "123", 1000);
-    BankAccount businessAccount = new BusinessAccount(accountOwner, "123", 1000);
+
+    BusinessAccountFactory businessAccountFactory = new BusinessAccountFactory();
+    CurrentAccountFactory currentAccountFactory = new CurrentAccountFactory();
+    SavingAccountFactory savingAccountFactory = new SavingAccountFactory();
+    StudentAccountFactory studentAccountFactory = new StudentAccountFactory();
+
+    BankAccount businessAccount = businessAccountFactory.createBusinessAccount(accountOwner, 1000);
+    BankAccount currentAccount = currentAccountFactory.createCurrentAccount(accountOwner, 1000);
+    BankAccount savingAccount = savingAccountFactory.createSavingAccount(accountOwner, 1000);
+    BankAccount studenAccount = studentAccountFactory.createStudentAccount(accountOwner, 1000, "Delta");
 
 
     List<BankAccount> bankAccounts = new ArrayList<>();
-    bankAccounts.add(bankAccount);
+    bankAccounts.add(currentAccount);
     bankAccounts.add(studenAccount);
 
     for (BankAccount account: bankAccounts){
@@ -52,10 +59,10 @@ void main() {
 
     consoleNotifierService.notify("--- Prevod 100 z business account (poplatek 0.3%) ---");
     printBalance("business pred", businessAccount, consoleNotifierService);
-    printBalance("current pred", bankAccount, consoleNotifierService);
-    transferTransferService.transfer(businessAccount, bankAccount, 100);
+    printBalance("current pred", currentAccount, consoleNotifierService);
+    transferTransferService.transfer(businessAccount, currentAccount, 100);
     printBalance("business po", businessAccount, consoleNotifierService);
-    printBalance("current po", bankAccount, consoleNotifierService);
+    printBalance("current po", currentAccount, consoleNotifierService);
     emailNotifierService.notify("Prevod 100 z business account na current account probehl");
 
     IO.println();
@@ -69,10 +76,12 @@ void main() {
 
     consoleNotifierService.notify("--- Neplatny vstup (prevod na stejny ucet) ---");
     try {
-        transferTransferService.transfer(bankAccount, bankAccount, 50);
+        transferTransferService.transfer(currentAccount, currentAccount, 50);
     } catch (IllegalArgumentException e) {
         emailNotifierService.notify("CHYBA: " + e.getMessage());
     }
+
+
 }
 
 private static void printBalance(String label, BankAccount bankAccount, NotifierService notifierService){
