@@ -3,13 +3,17 @@ package accounts;
 import accountsServices.AccountNumGeneratorService;
 import pearson.AccountOwner;
 
+import java.util.UUID;
+
 public class CurrentAccountFactory {
 
     public CurrentAccount createCurrentAccount(AccountOwner accountOwner, double balance){
 
+        String uuid = UUID.randomUUID().toString();
+
         AccountNumGeneratorService accountNumGeneratorService = new AccountNumGeneratorService();
         String accountNumber = accountNumGeneratorService.accNumGen();
 
-        return new CurrentAccount(accountOwner, accountNumber, balance);
+        return new CurrentAccount(uuid, accountOwner, accountNumber, balance);
     }
 }
