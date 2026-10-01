@@ -1,9 +1,12 @@
 package transfer;
 
 import accounts.BankAccount;
+import accounts.StudentAccount;
 import accounts.TransferFeePoint;
 
 public class TransferTransferService {
+
+    // studentsky ucet jako jediny muze pri prevodu jit do zaporu, a to az do -5000
 
     public void transfer(BankAccount sourceAccount, BankAccount targetAccount, double amount){
         if (sourceAccount == null || targetAccount == null) {
@@ -19,8 +22,15 @@ public class TransferTransferService {
         }
 
         double totalAmount = amount + getTransferFee(sourceAccount, amount);
+        double newSourceBalance = sourceAccount.getBalance() - totalAmount;
 
-        sourceAccount.setBalance(sourceAccount.getBalance() - totalAmount);
+        GetWithdrawLimitService getWithdrawLimitService = new GetWithdrawLimitService();
+        // ucet nesmi jit do zaporu, vyjimkou je studentsky ucet s povolenym limitem
+        if (newSourceBalance < getWithdrawLimitService.getWithdrawLimit(sourceAccount)) {
+            throw new IllegalArgumentException("Na uctu neni dostatek prostredku pro prevod");
+        }
+
+        sourceAccount.setBalance(newSourceBalance);
         targetAccount.setBalance(targetAccount.getBalance() + amount);
     }
 
