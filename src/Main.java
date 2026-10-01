@@ -3,6 +3,7 @@ import notifier.ConsoleNotifierService;
 import notifier.EmailNotifierService;
 import notifier.NotifierService;
 import pearson.AccountOwner;
+import pearson.AccountOwnerFactory;
 import transfer.DepositTransferService;
 import transfer.TransferTransferService;
 import transfer.WithdrawTransferService;
@@ -11,7 +12,9 @@ import transfer.WithdrawTransferService;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
 
-    AccountOwner accountOwner = new AccountOwner("Petr", "Banan");
+    AccountOwnerFactory accountOwnerFactory = new AccountOwnerFactory();
+
+    AccountOwner accountOwner = accountOwnerFactory.createAccountOwner("Petr", "Banan");
     accountOwner.setLastName("Bananos");
 
     BankAccount bankAccount = new CurrentAccount(accountOwner, "123", 100);
