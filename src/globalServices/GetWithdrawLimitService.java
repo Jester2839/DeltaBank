@@ -1,4 +1,4 @@
-package transfer;
+package globalServices;
 
 import accounts.BankAccount;
 import accounts.StudentAccount;

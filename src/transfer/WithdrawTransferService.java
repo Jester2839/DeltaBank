@@ -2,7 +2,7 @@ package transfer;
 
 import accounts.BankAccount;
 import accounts.BusinessAccount;
-import accounts.StudentAccount;
+import globalServices.GetWithdrawLimitService;
 
 public class WithdrawTransferService {
 

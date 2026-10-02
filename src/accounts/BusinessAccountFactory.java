@@ -1,6 +1,6 @@
 package accounts;
 
-import accountsServices.AccountNumGeneratorService;
+import globalServices.AccountNumGeneratorService;
 import pearson.AccountOwner;
 
 import java.util.UUID;

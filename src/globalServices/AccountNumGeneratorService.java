@@ -1,4 +1,4 @@
-package accountsServices;
+package globalServices;
 
 import java.util.Random;
 
