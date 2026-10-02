@@ -25,5 +25,27 @@ public class Transaction {
         this.status = status;
     }
 
-    
+    public String getUuid() {
+        return uuid;
+    }
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+    public String getSourceAccountNumber() {
+        return sourceAccountNumber;
+    }
+    public String getTargetAccountNumber() {
+        return targetAccountNumber;
+    }
+    public double getAmount() {
+        return amount;
+    }
+    public TransactionType getType() {
+        return type;
+    }
+    public TransactionStatus getStatus() {
+        return status;
+    }
+
+
 }
