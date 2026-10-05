@@ -31,6 +31,9 @@ public abstract class BankAccount {
 
         this.balance = balance;
     }
+    public String getAccountNumber() {
+        return accountNumber;
+    }
     public double getBalance() {
         return balance;
     }

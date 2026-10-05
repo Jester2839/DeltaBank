@@ -1,4 +1,5 @@
 import accounts.*;
+import globalServices.TransferLoggerService;
 import notifier.ConsoleNotifierService;
 import notifier.EmailNotifierService;
 import notifier.NotifierService;
@@ -48,9 +49,12 @@ void main() {
 
     IO.println();
 
-    DepositTransferService depositTransferService = new DepositTransferService();
-    WithdrawTransferService withdrawTransferService = new WithdrawTransferService();
-    TransferTransferService transferTransferService = new TransferTransferService();
+    // jedna instance loggeru sdilena vsemi transfer sluzbami, aby historie byla kompletni
+    TransferLoggerService transferLoggerService = new TransferLoggerService();
+
+    DepositTransferService depositTransferService = new DepositTransferService(transferLoggerService);
+    WithdrawTransferService withdrawTransferService = new WithdrawTransferService(transferLoggerService);
+    TransferTransferService transferTransferService = new TransferTransferService(transferLoggerService);
 
     // cely vystup jde pres notifier - staci vymenit implementaci a vystup vypada jinak
     NotifierService consoleNotifierService = new ConsoleNotifierService();
@@ -79,6 +83,28 @@ void main() {
     } catch (IllegalArgumentException e) {
         emailNotifierService.notify("CHYBA: " + e.getMessage());
     }
+
+    IO.println();
+
+    consoleNotifierService.notify("--- Vklad 500 na current account ---");
+    printBalance("current pred vkladem", currentAccount, consoleNotifierService);
+    depositTransferService.deposit(currentAccount, 500);
+    printBalance("current po vkladu", currentAccount, consoleNotifierService);
+
+    IO.println();
+
+    consoleNotifierService.notify("--- Vyber 100 z current account ---");
+    printBalance("current pred vyberem", currentAccount, consoleNotifierService);
+    withdrawTransferService.withdraw(currentAccount, 100);
+    printBalance("current po vyberu", currentAccount, consoleNotifierService);
+
+    IO.println();
+
+    // historie transakci ulozena v TransferLoggerService
+    transferLoggerService.printAllTransactions();
+
+    IO.println();
+    transferLoggerService.printTransactionsByAccount(currentAccount.getAccountNumber());
 
 }
 

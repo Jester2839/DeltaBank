@@ -1,7 +1,5 @@
 package transactions;
 
-import accounts.BankAccount;
-
 import java.time.LocalDateTime;
 
 public class Transaction {
@@ -47,5 +45,16 @@ public class Transaction {
         return status;
     }
 
-
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "uuid='" + uuid + '\'' +
+                ", timestamp=" + timestamp +
+                ", sourceAccountNumber='" + sourceAccountNumber + '\'' +
+                ", targetAccountNumber='" + targetAccountNumber + '\'' +
+                ", amount=" + amount +
+                ", type=" + type +
+                ", status=" + status +
+                '}';
+    }
 }
