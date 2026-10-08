@@ -31,7 +31,6 @@ public class WithdrawTransferService {
         GetWithdrawLimitService getWithdrawLimitService = new GetWithdrawLimitService();
         if(newBalance < getWithdrawLimitService.getWithdrawLimit(account))
         {
-            // u vyberu penize odchazeji ven, proto je cilovy ucet prazdny (null)
             transferLoggerService.log(transactionFactory.createTransaction(account.getAccountNumber(), null, amount, TransactionType.WITHDRAW, TransactionStatus.FAILED));
             throw new IllegalArgumentException("Cannot subtract negative amount");
         }

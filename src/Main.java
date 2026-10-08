@@ -94,9 +94,9 @@ void main() {
     IO.println();
 
     consoleNotifierService.notify("--- Vyber 100 z current account ---");
-    printBalance("current pred vyberem", currentAccount, consoleNotifierService);
-    withdrawTransferService.withdraw(currentAccount, 100);
-    printBalance("current po vyberu", currentAccount, consoleNotifierService);
+    printBalance("current pred vyberem", studenAccount, consoleNotifierService);
+    withdrawTransferService.withdraw(studenAccount, 100);
+    printBalance("current po vyberu", studenAccount, consoleNotifierService);
 
     IO.println();
 
@@ -104,7 +104,7 @@ void main() {
     transferLoggerService.printAllTransactions();
 
     IO.println();
-    transferLoggerService.printTransactionsByAccount(currentAccount.getAccountNumber());
+    //transferLoggerService.printTransactionsByAccount(currentAccount.getAccountNumber());
 
 }
 
