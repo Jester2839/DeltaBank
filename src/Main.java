@@ -1,4 +1,5 @@
 import accounts.*;
+import accounts.serialization.BankAccountJSONSerializator;
 import accounts.serialization.BankAccountXmlSerializator;
 import globalServices.TransferLoggerService;
 import notifier.ConsoleNotifierService;
@@ -44,6 +45,13 @@ void main() {
 
     IO.println("\n" + bankAccountXml);
     IO.println(bankAccountXmlAll);
+
+    BankAccountJSONSerializator bankAccountJSONSerializator = new BankAccountJSONSerializator();
+    String bankAccountJSON = bankAccountJSONSerializator.serialize((currentAccount));
+    String bankAccountJSONAll = bankAccountJSONSerializator.serializeAll(bankAccounts);
+
+    IO.println("\n" + bankAccountJSON);
+    IO.println(bankAccountJSONAll);
 
 
     for (BankAccount account: bankAccounts){
