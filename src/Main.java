@@ -1,6 +1,8 @@
 import accounts.*;
-import accounts.serialization.BankAccountJSONSerializator;
-import accounts.serialization.BankAccountXmlSerializator;
+import accounts.serialization.BankAccountGsonSerializer;
+import accounts.serialization.BankAccountJSONSerializer;
+import accounts.serialization.BankAccountSerializer;
+import accounts.serialization.BankAccountXmlSerializer;
 import globalServices.TransferLoggerService;
 import notifier.ConsoleNotifierService;
 import notifier.EmailNotifierService;
@@ -39,19 +41,21 @@ void main() {
 
 
 
-    BankAccountXmlSerializator bankAccountXmlSerializator = new BankAccountXmlSerializator();
-    String bankAccountXml = bankAccountXmlSerializator.serialize((currentAccount));
-    String bankAccountXmlAll = bankAccountXmlSerializator.serializeAll(bankAccounts);
+    BankAccountSerializer bankAccountXmlSerializer = new BankAccountXmlSerializer();
+    BankAccountSerializer bankAccountJSONSerializer = new BankAccountJSONSerializer();
+    BankAccountSerializer bankAccountGsonSerializer = new BankAccountGsonSerializer();
 
-    IO.println("\n" + bankAccountXml);
+    String bankAccountXmlAll = bankAccountXmlSerializer.serializeAll(bankAccounts);
+    String bankAccountJSONAll = bankAccountJSONSerializer.serializeAll(bankAccounts);
+    String bankAccountGson = bankAccountGsonSerializer.serializeAll((bankAccounts));
+
+
+    IO.println("");
     IO.println(bankAccountXmlAll);
-
-    BankAccountJSONSerializator bankAccountJSONSerializator = new BankAccountJSONSerializator();
-    String bankAccountJSON = bankAccountJSONSerializator.serialize((currentAccount));
-    String bankAccountJSONAll = bankAccountJSONSerializator.serializeAll(bankAccounts);
-
-    IO.println("\n" + bankAccountJSON);
     IO.println(bankAccountJSONAll);
+    IO.println(bankAccountGson);
+
+
 
 
     for (BankAccount account: bankAccounts){

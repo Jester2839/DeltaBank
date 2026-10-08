@@ -4,9 +4,10 @@ import accounts.BankAccount;
 
 import java.util.List;
 
-public class BankAccountJSONSerializator {
+public class BankAccountJSONSerializer implements BankAccountSerializer {
 
     BankAccountSerializeFactory bankAccountSerializeFactory = new BankAccountSerializeFactory();
+
     public String serializeAll(List<BankAccount> bankAccounts) {
         StringBuilder builder = new StringBuilder();
         builder.append("[");

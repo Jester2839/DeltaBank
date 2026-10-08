@@ -4,9 +4,10 @@ import accounts.BankAccount;
 
 import java.util.List;
 
-public class BankAccountXmlSerializator {
+public class BankAccountXmlSerializer implements BankAccountSerializer {
 
     BankAccountSerializeFactory bankAccountSerializeFactory = new BankAccountSerializeFactory();
+
     public String serialize(BankAccount bankAccount){
         BankAccountSerialize bankAccountSerialize = bankAccountSerializeFactory.createBankAccountSerialize(bankAccount);
 
