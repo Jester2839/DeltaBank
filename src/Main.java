@@ -1,4 +1,5 @@
 import accounts.*;
+import accounts.serialization.BankAccountXmlSerializator;
 import globalServices.TransferLoggerService;
 import notifier.ConsoleNotifierService;
 import notifier.EmailNotifierService;
@@ -29,21 +30,25 @@ void main() {
     BankAccount savingAccount = savingAccountFactory.createSavingAccount(accountOwner, 1000);
     BankAccount studenAccount = studentAccountFactory.createStudentAccount(accountOwner, 1000, "Delta");
 
-
     List<BankAccount> bankAccounts = new ArrayList<>();
     bankAccounts.add(currentAccount);
     bankAccounts.add(studenAccount);
+    bankAccounts.add(businessAccount);
+    bankAccounts.add(savingAccount);
+
+
+
+    BankAccountXmlSerializator bankAccountXmlSerializator = new BankAccountXmlSerializator();
+    String bankAccountXml = bankAccountXmlSerializator.serialize((currentAccount));
+    String bankAccountXmlAll = bankAccountXmlSerializator.serializeAll(bankAccounts);
+
+    IO.println("\n" + bankAccountXml);
+    IO.println(bankAccountXmlAll);
+
 
     for (BankAccount account: bankAccounts){
         if (account instanceof InterestPoint){
             ((InterestPoint)account).calculateInterest();
-        }
-    }
-
-    for (BankAccount account: bankAccounts){
-        if(account instanceof  StudentAccount) {
-            StudentAccount stdAccount = (StudentAccount) account;
-            IO.println("school: " + stdAccount.getSchoolName());
         }
     }
 

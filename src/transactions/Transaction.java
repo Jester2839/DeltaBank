@@ -47,14 +47,13 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" +
-                "Čas: " + timestamp +
-                " - Z Účtu: '" + sourceAccountNumber + '\'' +
-                " - Na Účet: '" + targetAccountNumber + '\'' +
-                " - částka: " + amount +
-                " - Typ: " + type +
-                " - Stav: " + status +
-                '}';
+        return type + " (" +
+                "Date: " + timestamp +
+                " || From: '" + sourceAccountNumber + '\'' +
+                " - To: '" + targetAccountNumber + '\'' +
+                " || Amount: " + amount +
+                " || Status: " + status +
+                ')';
     }
 
     /*@Override
