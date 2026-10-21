@@ -1,8 +1,5 @@
 import accounts.*;
-import accounts.serialization.BankAccountGsonSerializer;
-import accounts.serialization.BankAccountJSONSerializer;
-import accounts.serialization.BankAccountSerializer;
-import accounts.serialization.BankAccountXmlSerializer;
+import accounts.serialization.*;
 import globalServices.TransferLoggerService;
 import notifier.ConsoleNotifierService;
 import notifier.EmailNotifierService;
@@ -44,16 +41,19 @@ void main() {
     BankAccountSerializer bankAccountXmlSerializer = new BankAccountXmlSerializer();
     BankAccountSerializer bankAccountJSONSerializer = new BankAccountJSONSerializer();
     BankAccountSerializer bankAccountGsonSerializer = new BankAccountGsonSerializer();
+    BankAccountSerializer bankAccountJacksonSerializer = new BankAccountJacksonSerializer();
 
     String bankAccountXmlAll = bankAccountXmlSerializer.serializeAll(bankAccounts);
     String bankAccountJSONAll = bankAccountJSONSerializer.serializeAll(bankAccounts);
-    String bankAccountGson = bankAccountGsonSerializer.serializeAll((bankAccounts));
+    String bankAccountGson = bankAccountGsonSerializer.serializeAll(bankAccounts);
+    String bankAccountJackson = bankAccountJacksonSerializer.serializeAll(bankAccounts);
 
 
     IO.println("");
     IO.println(bankAccountXmlAll);
     IO.println(bankAccountJSONAll);
     IO.println(bankAccountGson);
+    IO.println(bankAccountJackson);
 
 
 
