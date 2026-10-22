@@ -1,6 +1,7 @@
-package accounts;
+package accounts.factories;
 
-import globalServices.AccountNumGeneratorService;
+import accounts.StudentAccount;
+import accounts.services.AccountNumGeneratorService;
 import pearson.AccountOwner;
 
 import java.util.UUID;

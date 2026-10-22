@@ -1,5 +1,7 @@
 import accounts.*;
 import accounts.serialization.*;
+import accounts.services.BankAccountService;
+import accounts.services.CreateAccountLoggerService;
 import globalServices.TransferLoggerService;
 import notifier.ConsoleNotifierService;
 import notifier.EmailNotifierService;
@@ -15,50 +17,34 @@ import transfer.WithdrawTransferService;
 void main() {
 
     AccountOwnerFactory accountOwnerFactory = new AccountOwnerFactory();
+    BankAccountService bankAccountService = new BankAccountService();
+    CreateAccountLoggerService logger = new CreateAccountLoggerService();
 
     AccountOwner accountOwner = accountOwnerFactory.createAccountOwner("Petr", "Banan");
     accountOwner.setLastName("Bananos");
 
 
-    BusinessAccountFactory businessAccountFactory = new BusinessAccountFactory();
-    CurrentAccountFactory currentAccountFactory = new CurrentAccountFactory();
-    SavingAccountFactory savingAccountFactory = new SavingAccountFactory();
-    StudentAccountFactory studentAccountFactory = new StudentAccountFactory();
-
-    BankAccount businessAccount = businessAccountFactory.createBusinessAccount(accountOwner, 1000);
-    BankAccount currentAccount = currentAccountFactory.createCurrentAccount(accountOwner, 1000);
-    BankAccount savingAccount = savingAccountFactory.createSavingAccount(accountOwner, 1000);
-    BankAccount studenAccount = studentAccountFactory.createStudentAccount(accountOwner, 1000, "Delta");
-
-    List<BankAccount> bankAccounts = new ArrayList<>();
-    bankAccounts.add(currentAccount);
-    bankAccounts.add(studenAccount);
-    bankAccounts.add(businessAccount);
-    bankAccounts.add(savingAccount);
+    BankAccount businessAccount = logger.logCreation(() -> bankAccountService.createBussinesBankAccount(accountOwner, 1000));
+    BankAccount currentAccount = logger.logCreationWithTime(() -> bankAccountService.createCurrentBankAccount(accountOwner, 1000));
+    BankAccount savingAccount = logger.logCreationAll(() -> bankAccountService.createSavingBankAccount(accountOwner, 1000));
+    BankAccount studenAccount = logger.logCreationAll(() -> bankAccountService.createStudentBankAccount(accountOwner, 1000, "Delta"));
 
 
-
-    BankAccountSerializer bankAccountXmlSerializer = new BankAccountXmlSerializer();
-    BankAccountSerializer bankAccountJSONSerializer = new BankAccountJSONSerializer();
     BankAccountSerializer bankAccountGsonSerializer = new BankAccountGsonSerializer();
     BankAccountSerializer bankAccountJacksonSerializer = new BankAccountJacksonSerializer();
 
-    String bankAccountXmlAll = bankAccountXmlSerializer.serializeAll(bankAccounts);
-    String bankAccountJSONAll = bankAccountJSONSerializer.serializeAll(bankAccounts);
-    String bankAccountGson = bankAccountGsonSerializer.serializeAll(bankAccounts);
-    String bankAccountJackson = bankAccountJacksonSerializer.serializeAll(bankAccounts);
+    String bankAccountGson = bankAccountGsonSerializer.serializeAll(bankAccountService.getBankAccounts());
+    String bankAccountJackson = bankAccountJacksonSerializer.serializeAll(bankAccountService.getBankAccounts());
 
 
     IO.println("");
-    IO.println(bankAccountXmlAll);
-    IO.println(bankAccountJSONAll);
     IO.println(bankAccountGson);
     IO.println(bankAccountJackson);
 
 
 
 
-    for (BankAccount account: bankAccounts){
+    for (BankAccount account: bankAccountService.getBankAccounts()){
         if (account instanceof InterestPoint){
             ((InterestPoint)account).calculateInterest();
         }
