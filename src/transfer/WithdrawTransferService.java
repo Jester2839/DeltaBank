@@ -2,8 +2,6 @@ package transfer;
 
 import accounts.BankAccount;
 import accounts.BusinessAccount;
-import globalServices.GetWithdrawLimitService;
-import globalServices.TransferLoggerService;
 import transactions.TransactionFactory;
 import transactions.TransactionStatus;
 import transactions.TransactionType;

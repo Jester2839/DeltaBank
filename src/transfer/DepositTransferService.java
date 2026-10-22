@@ -2,7 +2,6 @@ package transfer;
 
 import accounts.BankAccount;
 import accounts.StudentAccount;
-import globalServices.TransferLoggerService;
 import transactions.TransactionFactory;
 import transactions.TransactionStatus;
 import transactions.TransactionType;

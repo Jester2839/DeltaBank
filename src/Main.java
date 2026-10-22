@@ -2,7 +2,10 @@ import accounts.*;
 import accounts.serialization.*;
 import accounts.services.BankAccountService;
 import accounts.services.CreateAccountLoggerService;
-import globalServices.TransferLoggerService;
+import accounts.services.IBankAccountService;
+import accounts.services.decorators.BankAccountWithLoggerService;
+import accounts.services.decorators.BankAccountWithLoggerWithTimeService;
+import transfer.TransferLoggerService;
 import notifier.ConsoleNotifierService;
 import notifier.EmailNotifierService;
 import notifier.NotifierService;
@@ -17,19 +20,45 @@ import transfer.WithdrawTransferService;
 void main() {
 
     AccountOwnerFactory accountOwnerFactory = new AccountOwnerFactory();
-    BankAccountService bankAccountService = new BankAccountService();
+    //BankAccountService bankAccountService = new BankAccountService();
     CreateAccountLoggerService logger = new CreateAccountLoggerService();
 
     AccountOwner accountOwner = accountOwnerFactory.createAccountOwner("Petr", "Banan");
     accountOwner.setLastName("Bananos");
 
-
+    //Moje řešení
+    //-------------------------------------
+    /*
     BankAccount businessAccount = logger.logCreation(() -> bankAccountService.createBussinesBankAccount(accountOwner, 1000));
     BankAccount currentAccount = logger.logCreationWithTime(() -> bankAccountService.createCurrentBankAccount(accountOwner, 1000));
     BankAccount savingAccount = logger.logCreationAll(() -> bankAccountService.createSavingBankAccount(accountOwner, 1000));
     BankAccount studenAccount = logger.logCreationAll(() -> bankAccountService.createStudentBankAccount(accountOwner, 1000, "Delta"));
+    */
+    //---------------------------------------------
 
+    // Učitelovo řešení
+    //-----------------------------------------------------
+    IBankAccountService bankAccountService = new BankAccountService();
+    IBankAccountService bankAccouontWithLoggerService = new BankAccountWithLoggerService(bankAccountService);
+    IBankAccountService bankAccouontWithLoggerWithTimeService = new BankAccountWithLoggerWithTimeService(bankAccountService);
+    IBankAccountService bankAccouontWithLoggerAndWithTimeService = new BankAccountWithLoggerService(bankAccouontWithLoggerWithTimeService);
 
+    IO.println("Original");
+    BankAccount businessAccount = bankAccountService.createBussinesBankAccount(accountOwner, 100);
+    IO.println("Ni nenapíše");
+    IO.println("==========");
+    IO.println("LOGGER");
+    BankAccount currentAccount = bankAccouontWithLoggerService.createCurrentBankAccount(accountOwner, 100);
+    IO.println("==========");
+    IO.println("TIME");
+    BankAccount savingAccount = bankAccouontWithLoggerWithTimeService.createSavingBankAccount(accountOwner, 100);
+    IO.println("==========");
+    IO.println("ALL");
+    BankAccount studenAccount = bankAccouontWithLoggerAndWithTimeService.createStudentBankAccount(accountOwner, 100, "DELTA");
+    IO.println("==========");
+    //--------------------------------------------------
+
+    // Zbytek Aplikace
     BankAccountSerializer bankAccountGsonSerializer = new BankAccountGsonSerializer();
     BankAccountSerializer bankAccountJacksonSerializer = new BankAccountJacksonSerializer();
 

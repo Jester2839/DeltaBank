@@ -10,7 +10,7 @@ import pearson.AccountOwner;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BankAccountService {
+public class BankAccountService implements IBankAccountService {
 
     BusinessAccountFactory businessAccountFactory = new BusinessAccountFactory();
     CurrentAccountFactory currentAccountFactory = new CurrentAccountFactory();

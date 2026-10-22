@@ -1,4 +1,4 @@
-package globalServices;
+package transfer;
 
 import transactions.Transaction;
 
