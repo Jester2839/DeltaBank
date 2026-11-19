@@ -1,7 +1,7 @@
 package accounts.services;
 
 import accounts.BankAccount;
-import pearson.AccountOwner;
+import person.AccountOwner;
 
 import java.util.List;
 

@@ -1,6 +1,4 @@
-package pearson;
-
-import java.util.UUID;
+package person;
 
 public class AccountOwner {
 

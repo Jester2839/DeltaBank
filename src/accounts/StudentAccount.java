@@ -1,6 +1,6 @@
 package accounts;
 
-import pearson.AccountOwner;
+import person.AccountOwner;
 
 public class StudentAccount extends BankAccount{
 

@@ -2,7 +2,7 @@ package accounts.factories;
 
 import accounts.SavingAccount;
 import accounts.services.AccountNumGeneratorService;
-import pearson.AccountOwner;
+import person.AccountOwner;
 
 import java.util.UUID;
 

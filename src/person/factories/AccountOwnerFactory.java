@@ -1,4 +1,6 @@
-package pearson;
+package person.factories;
+
+import person.AccountOwner;
 
 import java.util.UUID;
 

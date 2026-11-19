@@ -3,12 +3,9 @@ package accounts;
 // 2010
 // 2102405518
 
-import notifier.ConsoleNotifierService;
 import notifier.EmailNotifierService;
 import notifier.NotifierService;
-import pearson.AccountOwner;
-
-import java.util.UUID;
+import person.AccountOwner;
 
 public abstract class BankAccount {
 
