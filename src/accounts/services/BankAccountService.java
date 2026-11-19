@@ -5,7 +5,7 @@ import accounts.factories.BusinessAccountFactory;
 import accounts.factories.CurrentAccountFactory;
 import accounts.factories.SavingAccountFactory;
 import accounts.factories.StudentAccountFactory;
-import pearson.AccountOwner;
+import person.AccountOwner;
 
 import java.util.ArrayList;
 import java.util.List;

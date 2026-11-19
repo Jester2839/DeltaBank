@@ -2,7 +2,7 @@ package accounts.services.decorators;
 
 import accounts.BankAccount;
 import accounts.services.IBankAccountService;
-import pearson.AccountOwner;
+import person.AccountOwner;
 
 import java.time.LocalTime;
 import java.util.List;
