@@ -5,6 +5,8 @@ import accounts.services.CreateAccountLoggerService;
 import accounts.services.IBankAccountService;
 import accounts.services.decorators.BankAccountWithLoggerService;
 import accounts.services.decorators.BankAccountWithLoggerWithTimeService;
+import di.Container;
+import di.ContainerFactory;
 import transfer.TransferLoggerService;
 import notifier.ConsoleNotifierService;
 import notifier.EmailNotifierService;
@@ -19,11 +21,17 @@ import transfer.WithdrawTransferService;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 void main() {
 
-    AccountOwnerFactory accountOwnerFactory = new AccountOwnerFactory();
-    //BankAccountService bankAccountService = new BankAccountService();
-    CreateAccountLoggerService logger = new CreateAccountLoggerService();
+    // vytvorim container
+    ContainerFactory containerFactory = new ContainerFactory();
+    Container container = containerFactory.createContainer();
 
-    AccountOwner accountOwner = accountOwnerFactory.createAccountOwner("Petr", "Banan");
+
+
+
+    //AccountOwnerFactory accountOwnerFactory = new AccountOwnerFactory();
+    //CreateAccountLoggerService logger = new CreateAccountLoggerService();
+
+    AccountOwner accountOwner = container.accountOwnerService.createAccountOwner("Petr", "Banan");
     accountOwner.setLastName("Bananos");
 
     //Moje řešení
@@ -38,23 +46,23 @@ void main() {
 
     // Učitelovo řešení
     //-----------------------------------------------------
-    IBankAccountService bankAccountService = new BankAccountService();
+    IBankAccountService bankAccountService = container.bankAccountService;
     IBankAccountService bankAccouontWithLoggerService = new BankAccountWithLoggerService(bankAccountService);
     IBankAccountService bankAccouontWithLoggerWithTimeService = new BankAccountWithLoggerWithTimeService(bankAccountService);
     IBankAccountService bankAccouontWithLoggerAndWithTimeService = new BankAccountWithLoggerService(bankAccouontWithLoggerWithTimeService);
 
     IO.println("Original");
-    BankAccount businessAccount = bankAccountService.createBussinesBankAccount(accountOwner, 100);
+    BankAccount businessAccount = bankAccountService.createBussinesBankAccount(accountOwner, 1000);
     IO.println("Ni nenapíše");
     IO.println("==========");
     IO.println("LOGGER");
-    BankAccount currentAccount = bankAccouontWithLoggerService.createCurrentBankAccount(accountOwner, 100);
+    BankAccount currentAccount = bankAccouontWithLoggerService.createCurrentBankAccount(accountOwner, 1000);
     IO.println("==========");
     IO.println("TIME");
-    BankAccount savingAccount = bankAccouontWithLoggerWithTimeService.createSavingBankAccount(accountOwner, 100);
+    BankAccount savingAccount = bankAccouontWithLoggerWithTimeService.createSavingBankAccount(accountOwner, 1000);
     IO.println("==========");
     IO.println("ALL");
-    BankAccount studenAccount = bankAccouontWithLoggerAndWithTimeService.createStudentBankAccount(accountOwner, 100, "DELTA");
+    BankAccount studenAccount = bankAccouontWithLoggerAndWithTimeService.createStudentBankAccount(accountOwner, 1000, "DELTA");
     IO.println("==========");
     //--------------------------------------------------
 

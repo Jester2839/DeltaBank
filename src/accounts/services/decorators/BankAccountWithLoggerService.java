@@ -20,7 +20,7 @@ public class BankAccountWithLoggerService implements IBankAccountService {
         BankAccount bankAccount = this.bankAccountService.createBussinesBankAccount(accountOwner, balance);
         this.logEnd();
 
-        return null;
+        return bankAccount;
     }
 
     @Override
@@ -29,7 +29,7 @@ public class BankAccountWithLoggerService implements IBankAccountService {
         BankAccount bankAccount = this.bankAccountService.createCurrentBankAccount(accountOwner, balance);
         this.logEnd();
 
-        return null;
+        return bankAccount;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class BankAccountWithLoggerService implements IBankAccountService {
         BankAccount bankAccount = this.bankAccountService.createSavingBankAccount(accountOwner, balance);
         this.logEnd();
 
-        return null;
+        return bankAccount;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class BankAccountWithLoggerService implements IBankAccountService {
         BankAccount bankAccount = this.bankAccountService.createStudentBankAccount(accountOwner, balance, school);
         this.logEnd();
 
-        return null;
+        return bankAccount;
     }
 
     @Override

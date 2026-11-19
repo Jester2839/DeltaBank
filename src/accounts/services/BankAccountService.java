@@ -19,6 +19,12 @@ public class BankAccountService implements IBankAccountService {
 
     List<BankAccount> bankAccounts = new ArrayList<>();
 
+    public BankAccountService(BusinessAccountFactory businessAccountFactory, CurrentAccountFactory currentAccountFactory, SavingAccountFactory savingAccountFactory, StudentAccountFactory studentAccountFactory) {
+        this.businessAccountFactory = businessAccountFactory;
+        this.currentAccountFactory = currentAccountFactory;
+        this.savingAccountFactory = savingAccountFactory;
+        this.studentAccountFactory = studentAccountFactory;
+    }
 
     public BankAccount createBussinesBankAccount(AccountOwner accountOwner, double balance) {
         BankAccount bussinesAccount = businessAccountFactory.createBusinessAccount(accountOwner, balance);
