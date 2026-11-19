@@ -47,8 +47,8 @@ void main() {
     // Učitelovo řešení
     //-----------------------------------------------------
     IBankAccountService bankAccountService = container.bankAccountService;
-    IBankAccountService bankAccouontWithLoggerService = new BankAccountWithLoggerService(bankAccountService);
-    IBankAccountService bankAccouontWithLoggerWithTimeService = new BankAccountWithLoggerWithTimeService(bankAccountService);
+    IBankAccountService bankAccouontWithLoggerService = container.bankAccountWithLoggerService;
+    IBankAccountService bankAccouontWithLoggerWithTimeService = container.bankAccountWithLoggerWithTimeService;
     IBankAccountService bankAccouontWithLoggerAndWithTimeService = new BankAccountWithLoggerService(bankAccouontWithLoggerWithTimeService);
 
     IO.println("Original");
