@@ -12,10 +12,10 @@ import java.util.List;
 
 public class BankAccountService implements IBankAccountService {
 
-    BusinessAccountFactory businessAccountFactory = new BusinessAccountFactory();
-    CurrentAccountFactory currentAccountFactory = new CurrentAccountFactory();
-    SavingAccountFactory savingAccountFactory = new SavingAccountFactory();
-    StudentAccountFactory studentAccountFactory = new StudentAccountFactory();
+    private final BusinessAccountFactory businessAccountFactory;
+    private final CurrentAccountFactory currentAccountFactory;
+    private final SavingAccountFactory savingAccountFactory;
+    private final StudentAccountFactory studentAccountFactory;
 
     List<BankAccount> bankAccounts = new ArrayList<>();
 

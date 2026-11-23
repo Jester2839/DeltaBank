@@ -8,11 +8,16 @@ import java.util.UUID;
 
 public class SavingAccountFactory {
 
+    private final AccountNumGeneratorService accountNumGeneratorService;
+
+    public SavingAccountFactory(AccountNumGeneratorService accountNumGeneratorService) {
+        this.accountNumGeneratorService = accountNumGeneratorService;
+    }
+
     public SavingAccount createSavingAccount(AccountOwner accountOwner, double balance){
 
         String uuid = UUID.randomUUID().toString();
 
-        AccountNumGeneratorService accountNumGeneratorService = new AccountNumGeneratorService();
         String accountNumber = accountNumGeneratorService.accNumGen();
 
         return new SavingAccount(uuid, accountOwner, accountNumber, balance);

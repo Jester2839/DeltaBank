@@ -16,7 +16,7 @@ public class AccountNumGeneratorService {
      * Vygeneruje náhodné, ale matematicky validní číslo českého bankovního účtu.
      * Formát: CCCCCCCCCC/KKKK
      */
-    public static String accNumGen() {
+    public String accNumGen() {
         Random random = new Random();
         int[] number = new int[10];
 

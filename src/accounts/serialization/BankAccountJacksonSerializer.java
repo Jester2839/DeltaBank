@@ -16,9 +16,10 @@ public class BankAccountJacksonSerializer implements BankAccountSerializer {
 
     private final XmlMapper xmlMapper;
 
-    private final BankAccountSerializeFactory bankAccountSerializeFactory = new BankAccountSerializeFactory();
+    private final BankAccountSerializeFactory bankAccountSerializeFactory;
 
-    public BankAccountJacksonSerializer() {
+    public BankAccountJacksonSerializer(BankAccountSerializeFactory bankAccountSerializeFactory) {
+        this.bankAccountSerializeFactory = bankAccountSerializeFactory;
         xmlMapper = new XmlMapper();
         xmlMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         xmlMapper.enable(SerializationFeature.INDENT_OUTPUT);

@@ -11,10 +11,11 @@ public class DepositTransferService {
     private static final double STUDENT_ACCOUNT_DEPOSIT_BONUS = 0.005;
 
     private final TransferLoggerService transferLoggerService;
-    private final TransactionFactory transactionFactory = new TransactionFactory();
+    private final TransactionFactory transactionFactory;
 
-    public DepositTransferService(TransferLoggerService transferLoggerService) {
+    public DepositTransferService(TransferLoggerService transferLoggerService, TransactionFactory transactionFactory) {
         this.transferLoggerService = transferLoggerService;
+        this.transactionFactory = transactionFactory;
     }
 
     public void deposit(BankAccount bankAccount, double amount) {

@@ -11,10 +11,13 @@ public class TransferTransferService {
     // studentsky ucet jako jediny muze pri prevodu jit do zaporu, a to az do -5000
 
     private final TransferLoggerService transferLoggerService;
-    private final TransactionFactory transactionFactory = new TransactionFactory();
+    private final TransactionFactory transactionFactory;
+    private final GetWithdrawLimitService getWithdrawLimitService;
 
-    public TransferTransferService(TransferLoggerService transferLoggerService) {
+    public TransferTransferService(TransferLoggerService transferLoggerService, TransactionFactory transactionFactory, GetWithdrawLimitService getWithdrawLimitService) {
         this.transferLoggerService = transferLoggerService;
+        this.transactionFactory = transactionFactory;
+        this.getWithdrawLimitService = getWithdrawLimitService;
     }
 
     public void transfer(BankAccount sourceAccount, BankAccount targetAccount, double amount){
@@ -36,7 +39,6 @@ public class TransferTransferService {
         double totalAmount = amount + getTransferFee(sourceAccount, amount);
         double newSourceBalance = sourceAccount.getBalance() - totalAmount;
 
-        GetWithdrawLimitService getWithdrawLimitService = new GetWithdrawLimitService();
         // ucet nesmi jit do zaporu, vyjimkou je studentsky ucet s povolenym limitem
         if (newSourceBalance < getWithdrawLimitService.getWithdrawLimit(sourceAccount)) {
             logTransaction(sourceAccount, targetAccount, amount, TransactionStatus.FAILED);

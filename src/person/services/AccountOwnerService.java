@@ -9,11 +9,11 @@ import java.util.UUID;
 
 public class AccountOwnerService {
 
+    private final AccountOwnerFactory accountOwnerFactory;
+
     public AccountOwnerService(AccountOwnerFactory accountOwnerFactory) {
         this.accountOwnerFactory = accountOwnerFactory;
     }
-
-    AccountOwnerFactory accountOwnerFactory = new AccountOwnerFactory();
 
     List<AccountOwner> accountOwners = new LinkedList<>();
 

@@ -6,7 +6,11 @@ import java.util.List;
 
 public class BankAccountXmlSerializer implements BankAccountSerializer {
 
-    BankAccountSerializeFactory bankAccountSerializeFactory = new BankAccountSerializeFactory();
+    private final BankAccountSerializeFactory bankAccountSerializeFactory;
+
+    public BankAccountXmlSerializer(BankAccountSerializeFactory bankAccountSerializeFactory) {
+        this.bankAccountSerializeFactory = bankAccountSerializeFactory;
+    }
 
     public String serialize(BankAccount bankAccount){
         BankAccountSerialize bankAccountSerialize = bankAccountSerializeFactory.createBankAccountSerialize(bankAccount);

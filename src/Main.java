@@ -49,7 +49,7 @@ void main() {
     IBankAccountService bankAccountService = container.bankAccountService;
     IBankAccountService bankAccouontWithLoggerService = container.bankAccountWithLoggerService;
     IBankAccountService bankAccouontWithLoggerWithTimeService = container.bankAccountWithLoggerWithTimeService;
-    IBankAccountService bankAccouontWithLoggerAndWithTimeService = new BankAccountWithLoggerService(bankAccouontWithLoggerWithTimeService);
+    IBankAccountService bankAccouontWithLoggerAndWithTimeService = container.bankAccountWithLoggerAndWithTimeService;
 
     IO.println("Original");
     BankAccount businessAccount = bankAccountService.createBussinesBankAccount(accountOwner, 1000);
@@ -67,8 +67,8 @@ void main() {
     //--------------------------------------------------
 
     // Zbytek Aplikace
-    BankAccountSerializer bankAccountGsonSerializer = new BankAccountGsonSerializer();
-    BankAccountSerializer bankAccountJacksonSerializer = new BankAccountJacksonSerializer();
+    BankAccountSerializer bankAccountGsonSerializer = container.bankAccountGsonSerializer;
+    BankAccountSerializer bankAccountJacksonSerializer = container.bankAccountJacksonSerializer;
 
     String bankAccountGson = bankAccountGsonSerializer.serializeAll(bankAccountService.getBankAccounts());
     String bankAccountJackson = bankAccountJacksonSerializer.serializeAll(bankAccountService.getBankAccounts());
@@ -90,15 +90,15 @@ void main() {
     IO.println();
 
     // jedna instance loggeru sdilena vsemi transfer sluzbami, aby historie byla kompletni
-    TransferLoggerService transferLoggerService = new TransferLoggerService();
+    TransferLoggerService transferLoggerService = container.transferLoggerService;
 
-    DepositTransferService depositTransferService = new DepositTransferService(transferLoggerService);
-    WithdrawTransferService withdrawTransferService = new WithdrawTransferService(transferLoggerService);
-    TransferTransferService transferTransferService = new TransferTransferService(transferLoggerService);
+    DepositTransferService depositTransferService = container.depositTransferService;
+    WithdrawTransferService withdrawTransferService = container.withdrawTransferService;
+    TransferTransferService transferTransferService = container.transferTransferService;
 
     // cely vystup jde pres notifier - staci vymenit implementaci a vystup vypada jinak
-    NotifierService consoleNotifierService = new ConsoleNotifierService();
-    NotifierService emailNotifierService = new EmailNotifierService();
+    NotifierService consoleNotifierService = container.consoleNotifierService;
+    NotifierService emailNotifierService = container.emailNotifierService;
 
     consoleNotifierService.notify("--- Prevod 100 z business account (poplatek 0.3%) ---");
     printBalance("business pred", businessAccount, consoleNotifierService);

@@ -11,10 +11,13 @@ public class WithdrawTransferService {
     private static final double BUSINESS_ACCOUNT_SERVICE_FEE = 0.01;
 
     private final TransferLoggerService transferLoggerService;
-    private final TransactionFactory transactionFactory = new TransactionFactory();
+    private final TransactionFactory transactionFactory;
+    private final GetWithdrawLimitService getWithdrawLimitService;
 
-    public WithdrawTransferService(TransferLoggerService transferLoggerService) {
+    public WithdrawTransferService(TransferLoggerService transferLoggerService, TransactionFactory transactionFactory, GetWithdrawLimitService getWithdrawLimitService) {
         this.transferLoggerService = transferLoggerService;
+        this.transactionFactory = transactionFactory;
+        this.getWithdrawLimitService = getWithdrawLimitService;
     }
 
     public void withdraw(BankAccount account, double amount) {
@@ -26,7 +29,6 @@ public class WithdrawTransferService {
             newBalance -= serviceFee;
         }
 
-        GetWithdrawLimitService getWithdrawLimitService = new GetWithdrawLimitService();
         if(newBalance < getWithdrawLimitService.getWithdrawLimit(account))
         {
             transferLoggerService.log(transactionFactory.createTransaction(account.getAccountNumber(), null, amount, TransactionType.WITHDRAW, TransactionStatus.FAILED));

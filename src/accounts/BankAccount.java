@@ -3,8 +3,6 @@ package accounts;
 // 2010
 // 2102405518
 
-import notifier.EmailNotifierService;
-import notifier.NotifierService;
 import person.AccountOwner;
 
 public abstract class BankAccount {
@@ -13,7 +11,6 @@ public abstract class BankAccount {
     private AccountOwner accountOwner;
     private String accountNumber;
     private double balance;
-    private NotifierService notifierService = new EmailNotifierService();
 
 
     // 2 konstruktory pro to aby se pri vytvoreni objektu mohl ale nemusel zadavat balance

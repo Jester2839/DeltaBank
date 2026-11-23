@@ -6,7 +6,11 @@ import java.util.List;
 
 public class BankAccountJSONSerializer implements BankAccountSerializer {
 
-    BankAccountSerializeFactory bankAccountSerializeFactory = new BankAccountSerializeFactory();
+    private final BankAccountSerializeFactory bankAccountSerializeFactory;
+
+    public BankAccountJSONSerializer(BankAccountSerializeFactory bankAccountSerializeFactory) {
+        this.bankAccountSerializeFactory = bankAccountSerializeFactory;
+    }
 
     public String serializeAll(List<BankAccount> bankAccounts) {
         StringBuilder builder = new StringBuilder();
