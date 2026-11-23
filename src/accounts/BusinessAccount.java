@@ -6,12 +6,12 @@ public class BusinessAccount extends BankAccount implements TransferFeePoint{
 
     private static final double TRANSFER_FEE_RATE = 0.003;
 
-    public BusinessAccount(String uuid, AccountOwner accountOwner, String accountNumber) {
-        super(uuid, accountOwner, accountNumber);
+    public BusinessAccount(String uuid, AccountOwner accountOwner, String accountNumber, String currency) {
+        super(uuid, accountOwner, accountNumber, currency);
     }
 
-    public BusinessAccount(String uuid, AccountOwner accountOwner, String accountNumber, double balance) {
-        super(uuid, accountOwner, accountNumber, balance);
+    public BusinessAccount(String uuid, AccountOwner accountOwner, String accountNumber, double balance, String currency) {
+        super(uuid, accountOwner, accountNumber, balance, currency);
     }
 
     @Override

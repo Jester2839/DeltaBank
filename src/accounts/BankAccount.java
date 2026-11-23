@@ -11,17 +11,19 @@ public abstract class BankAccount {
     private AccountOwner accountOwner;
     private String accountNumber;
     private double balance;
+    private String currency;
 
 
     // 2 konstruktory pro to aby se pri vytvoreni objektu mohl ale nemusel zadavat balance
-    public BankAccount(String uuid, AccountOwner accountOwner, String accountNumber) {
+    public BankAccount(String uuid, AccountOwner accountOwner, String accountNumber, String currency) {
         this.uuid = uuid;
         this.accountOwner = accountOwner;
         this.accountNumber = accountNumber;
         this.balance = 0;
+        this.currency = currency;
     }
-    public BankAccount(String uuid, AccountOwner accountOwner, String accountNumber, double balance) {
-        this(uuid, accountOwner, accountNumber);
+    public BankAccount(String uuid, AccountOwner accountOwner, String accountNumber, double balance, String currency) {
+        this(uuid, accountOwner, accountNumber, currency);
 
         this.balance = balance;
     }
@@ -30,6 +32,9 @@ public abstract class BankAccount {
     }
     public double getBalance() {
         return balance;
+    }
+    public String getCurrency() {
+        return currency;
     }
     public void setBalance(double balance) {
         this.balance = balance;

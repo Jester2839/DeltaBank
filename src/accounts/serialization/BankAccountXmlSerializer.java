@@ -17,9 +17,14 @@ public class BankAccountXmlSerializer implements BankAccountSerializer {
 
         StringBuilder builder = new StringBuilder();
 
+        builder.append("<bankAccount>");
         builder.append("<bankAccountNumber>");
         builder.append(bankAccountSerialize.accountNumber);
         builder.append("</bankAccountNumber>");
+        builder.append("<currency>");
+        builder.append(bankAccountSerialize.currency);
+        builder.append("</currency>");
+        builder.append("</bankAccount>");
 
         return builder.toString();
     }

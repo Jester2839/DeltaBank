@@ -9,6 +9,7 @@ import accounts.serialization.BankAccountJacksonSerializer;
 import accounts.serialization.BankAccountSerializeFactory;
 import accounts.services.AccountNumGeneratorService;
 import accounts.services.BankAccountService;
+import accounts.services.CurrencyConverterService;
 import accounts.services.decorators.BankAccountWithLoggerService;
 import accounts.services.decorators.BankAccountWithLoggerWithTimeService;
 import notifier.ConsoleNotifierService;
@@ -60,4 +61,7 @@ public class Container {
     public DepositTransferService depositTransferService = new DepositTransferService(transferLoggerService, transactionFactory);
     public WithdrawTransferService withdrawTransferService = new WithdrawTransferService(transferLoggerService, transactionFactory, getWithdrawLimitService);
     public TransferTransferService transferTransferService = new TransferTransferService(transferLoggerService, transactionFactory, getWithdrawLimitService);
+
+    // prevod měn
+    public CurrencyConverterService currencyConverterService = new CurrencyConverterService();
 }

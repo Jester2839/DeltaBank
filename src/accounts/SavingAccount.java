@@ -6,12 +6,12 @@ public class SavingAccount extends BankAccount implements InterestPoint{
     private static final float INTEREST_RATE = 0.05f;
     private static final float SUPER_ADD = 0.005f;
 
-    public SavingAccount(String uuid, AccountOwner accountOwner, String accountNumber) {
-        super(uuid, accountOwner, accountNumber);
+    public SavingAccount(String uuid, AccountOwner accountOwner, String accountNumber, String currency) {
+        super(uuid, accountOwner, accountNumber, currency);
     }
 
-    public SavingAccount(String uuid, AccountOwner accountOwner, String accountNumber, double balance) {
-        super(uuid, accountOwner, accountNumber, balance);
+    public SavingAccount(String uuid, AccountOwner accountOwner, String accountNumber, double balance, String currency) {
+        super(uuid, accountOwner, accountNumber, balance, currency);
     }
 
     @Override

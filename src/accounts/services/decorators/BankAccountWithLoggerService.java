@@ -15,36 +15,36 @@ public class BankAccountWithLoggerService implements IBankAccountService {
     }
 
     @Override
-    public BankAccount createBussinesBankAccount(AccountOwner accountOwner, double balance) {
+    public BankAccount createBussinesBankAccount(AccountOwner accountOwner, double balance, String currency) {
         this.logStart();
-        BankAccount bankAccount = this.bankAccountService.createBussinesBankAccount(accountOwner, balance);
+        BankAccount bankAccount = this.bankAccountService.createBussinesBankAccount(accountOwner, balance, currency);
         this.logEnd();
 
         return bankAccount;
     }
 
     @Override
-    public BankAccount createCurrentBankAccount(AccountOwner accountOwner, double balance) {
+    public BankAccount createCurrentBankAccount(AccountOwner accountOwner, double balance, String currency) {
         this.logStart();
-        BankAccount bankAccount = this.bankAccountService.createCurrentBankAccount(accountOwner, balance);
+        BankAccount bankAccount = this.bankAccountService.createCurrentBankAccount(accountOwner, balance, currency);
         this.logEnd();
 
         return bankAccount;
     }
 
     @Override
-    public BankAccount createSavingBankAccount(AccountOwner accountOwner, double balance) {
+    public BankAccount createSavingBankAccount(AccountOwner accountOwner, double balance, String currency) {
         this.logStart();
-        BankAccount bankAccount = this.bankAccountService.createSavingBankAccount(accountOwner, balance);
+        BankAccount bankAccount = this.bankAccountService.createSavingBankAccount(accountOwner, balance, currency);
         this.logEnd();
 
         return bankAccount;
     }
 
     @Override
-    public BankAccount createStudentBankAccount(AccountOwner accountOwner, double balance, String school) {
+    public BankAccount createStudentBankAccount(AccountOwner accountOwner, double balance, String school, String currency) {
         this.logStart();
-        BankAccount bankAccount = this.bankAccountService.createStudentBankAccount(accountOwner, balance, school);
+        BankAccount bankAccount = this.bankAccountService.createStudentBankAccount(accountOwner, balance, school, currency);
         this.logEnd();
 
         return bankAccount;

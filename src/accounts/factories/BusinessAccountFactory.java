@@ -14,13 +14,13 @@ public class BusinessAccountFactory {
         this.accountNumGeneratorService = accountNumGeneratorService;
     }
 
-    public BusinessAccount createBusinessAccount(AccountOwner accountOwner, double balance){
+    public BusinessAccount createBusinessAccount(AccountOwner accountOwner, double balance, String currency){
 
         String uuid = UUID.randomUUID().toString();
 
         String accountNumber = accountNumGeneratorService.accNumGen();
 
-        return new BusinessAccount(uuid, accountOwner, accountNumber, balance);
+        return new BusinessAccount(uuid, accountOwner, accountNumber, balance, currency);
     }
 
 }

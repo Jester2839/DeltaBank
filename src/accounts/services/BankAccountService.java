@@ -26,29 +26,29 @@ public class BankAccountService implements IBankAccountService {
         this.studentAccountFactory = studentAccountFactory;
     }
 
-    public BankAccount createBussinesBankAccount(AccountOwner accountOwner, double balance) {
-        BankAccount bussinesAccount = businessAccountFactory.createBusinessAccount(accountOwner, balance);
+    public BankAccount createBussinesBankAccount(AccountOwner accountOwner, double balance, String currency) {
+        BankAccount bussinesAccount = businessAccountFactory.createBusinessAccount(accountOwner, balance, currency);
         this.bankAccounts.add(bussinesAccount);
 
         return bussinesAccount;
     }
 
-    public BankAccount createCurrentBankAccount(AccountOwner accountOwner, double balance) {
-        BankAccount currentAccount = currentAccountFactory.createCurrentAccount(accountOwner, balance);
+    public BankAccount createCurrentBankAccount(AccountOwner accountOwner, double balance, String currency) {
+        BankAccount currentAccount = currentAccountFactory.createCurrentAccount(accountOwner, balance, currency);
         this.bankAccounts.add(currentAccount);
 
         return currentAccount;
     }
 
-    public BankAccount createSavingBankAccount(AccountOwner accountOwner, double balance) {
-        BankAccount savingAccount = savingAccountFactory.createSavingAccount(accountOwner, balance);
+    public BankAccount createSavingBankAccount(AccountOwner accountOwner, double balance, String currency) {
+        BankAccount savingAccount = savingAccountFactory.createSavingAccount(accountOwner, balance, currency);
         this.bankAccounts.add(savingAccount);
 
         return savingAccount;
     }
 
-    public BankAccount createStudentBankAccount(AccountOwner accountOwner, double balance, String school) {
-        BankAccount studentAccount = studentAccountFactory.createStudentAccount(accountOwner, balance, school);
+    public BankAccount createStudentBankAccount(AccountOwner accountOwner, double balance, String school, String currency) {
+        BankAccount studentAccount = studentAccountFactory.createStudentAccount(accountOwner, balance, school, currency);
         this.bankAccounts.add(studentAccount);
 
         return studentAccount;

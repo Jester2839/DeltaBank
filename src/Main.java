@@ -2,6 +2,7 @@ import accounts.*;
 import accounts.serialization.*;
 import accounts.services.BankAccountService;
 import accounts.services.CreateAccountLoggerService;
+import accounts.services.CurrencyConverterService;
 import accounts.services.IBankAccountService;
 import accounts.services.decorators.BankAccountWithLoggerService;
 import accounts.services.decorators.BankAccountWithLoggerWithTimeService;
@@ -34,6 +35,8 @@ void main() {
     AccountOwner accountOwner = container.accountOwnerService.createAccountOwner("Petr", "Banan");
     accountOwner.setLastName("Bananos");
 
+    CurrencyConverterService currencyConverterService = container.currencyConverterService;
+
     //Moje řešení
     //-------------------------------------
     /*
@@ -52,17 +55,17 @@ void main() {
     IBankAccountService bankAccouontWithLoggerAndWithTimeService = container.bankAccountWithLoggerAndWithTimeService;
 
     IO.println("Original");
-    BankAccount businessAccount = bankAccountService.createBussinesBankAccount(accountOwner, 1000);
+    BankAccount businessAccount = bankAccountService.createBussinesBankAccount(accountOwner, 10000, "CZK");
     IO.println("Ni nenapíše");
     IO.println("==========");
     IO.println("LOGGER");
-    BankAccount currentAccount = bankAccouontWithLoggerService.createCurrentBankAccount(accountOwner, 1000);
+    BankAccount currentAccount = bankAccouontWithLoggerService.createCurrentBankAccount(accountOwner, 1000, "EUR");
     IO.println("==========");
     IO.println("TIME");
-    BankAccount savingAccount = bankAccouontWithLoggerWithTimeService.createSavingBankAccount(accountOwner, 1000);
+    BankAccount savingAccount = bankAccouontWithLoggerWithTimeService.createSavingBankAccount(accountOwner, 1000, "USD");
     IO.println("==========");
     IO.println("ALL");
-    BankAccount studenAccount = bankAccouontWithLoggerAndWithTimeService.createStudentBankAccount(accountOwner, 1000, "DELTA");
+    BankAccount studenAccount = bankAccouontWithLoggerAndWithTimeService.createStudentBankAccount(accountOwner, 1000, "DELTA", "EUR");
     IO.println("==========");
     //--------------------------------------------------
 
@@ -101,19 +104,19 @@ void main() {
     NotifierService emailNotifierService = container.emailNotifierService;
 
     consoleNotifierService.notify("--- Prevod 100 z business account (poplatek 0.3%) ---");
-    printBalance("business pred", businessAccount, consoleNotifierService);
-    printBalance("current pred", currentAccount, consoleNotifierService);
+    printBalance("business pred", businessAccount, "GBP", currencyConverterService, consoleNotifierService);
+    printBalance("current pred", currentAccount, "GBP", currencyConverterService, consoleNotifierService);
     transferTransferService.transfer(businessAccount, currentAccount, 100);
-    printBalance("business po", businessAccount, consoleNotifierService);
-    printBalance("current po", currentAccount, consoleNotifierService);
+    printBalance("business po", businessAccount, "GBP", currencyConverterService, consoleNotifierService);
+    printBalance("current po", currentAccount, "GBP", currencyConverterService, consoleNotifierService);
     emailNotifierService.notify("Prevod 100 z business account na current account probehl");
 
     IO.println();
 
     consoleNotifierService.notify("--- Prevod 200 ze student account (bez poplatku) ---");
     transferTransferService.transfer(studenAccount, savingAccount, 200);
-    printBalance("student po", studenAccount, consoleNotifierService);
-    printBalance("saving po", savingAccount, consoleNotifierService);
+    printBalance("student po", studenAccount, "GBP", currencyConverterService, consoleNotifierService);
+    printBalance("saving po", savingAccount, "GBP", currencyConverterService, consoleNotifierService);
 
     IO.println();
 
@@ -127,16 +130,16 @@ void main() {
     IO.println();
 
     consoleNotifierService.notify("--- Vklad 500 na current account ---");
-    printBalance("current pred vkladem", currentAccount, consoleNotifierService);
+    printBalance("current pred vkladem", currentAccount, "GBP", currencyConverterService, consoleNotifierService);
     depositTransferService.deposit(currentAccount, 500);
-    printBalance("current po vkladu", currentAccount, consoleNotifierService);
+    printBalance("current po vkladu", currentAccount, "GBP", currencyConverterService, consoleNotifierService);
 
     IO.println();
 
     consoleNotifierService.notify("--- Vyber 100 z current account ---");
-    printBalance("current pred vyberem", studenAccount, consoleNotifierService);
+    printBalance("current pred vyberem", studenAccount, "GBP", currencyConverterService, consoleNotifierService);
     withdrawTransferService.withdraw(studenAccount, 100);
-    printBalance("current po vyberu", studenAccount, consoleNotifierService);
+    printBalance("current po vyberu", studenAccount, "GBP", currencyConverterService, consoleNotifierService);
 
     IO.println();
 
@@ -148,6 +151,10 @@ void main() {
 
 }
 
-private static void printBalance(String label, BankAccount bankAccount, NotifierService notifierService){
-    notifierService.notify(label + ": " + bankAccount.getBalance());
+private static void printBalance(String label, BankAccount bankAccount, String targetCurrency, CurrencyConverterService converter, NotifierService notifierService){
+    double originalBalance = bankAccount.getBalance();
+    String accountCurrency = bankAccount.getCurrency();
+    double convertedBalance = converter.convert(originalBalance, accountCurrency, targetCurrency);
+
+    notifierService.notify(String.format("%s: %.2f %s (přepočet: %.2f %s)", label, originalBalance, accountCurrency, convertedBalance, targetCurrency));
 }

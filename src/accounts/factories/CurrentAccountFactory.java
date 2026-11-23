@@ -14,12 +14,12 @@ public class CurrentAccountFactory {
         this.accountNumGeneratorService = accountNumGeneratorService;
     }
 
-    public CurrentAccount createCurrentAccount(AccountOwner accountOwner, double balance){
+    public CurrentAccount createCurrentAccount(AccountOwner accountOwner, double balance, String currency){
 
         String uuid = UUID.randomUUID().toString();
 
         String accountNumber = accountNumGeneratorService.accNumGen();
 
-        return new CurrentAccount(uuid, accountOwner, accountNumber, balance);
+        return new CurrentAccount(uuid, accountOwner, accountNumber, balance, currency);
     }
 }
