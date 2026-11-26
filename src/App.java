@@ -3,16 +3,22 @@ import accounts.InterestPoint;
 import accounts.serialization.BankAccountSerializer;
 import accounts.services.CurrencyConverterService;
 import accounts.services.IBankAccountService;
+import com.google.inject.Inject;
 import di.Container;
 import di.ContainerFactory;
 import notifier.NotifierService;
 import person.AccountOwner;
+import person.services.AccountOwnerService;
 import transfer.DepositTransferService;
 import transfer.TransferLoggerService;
 import transfer.TransferTransferService;
 import transfer.WithdrawTransferService;
 
 public class App {
+
+    @Inject
+    private AccountOwnerService accountOwnerService;
+
     public void run(){
         // vytvorim container
         ContainerFactory containerFactory = new ContainerFactory();
@@ -20,27 +26,12 @@ public class App {
 
 
 
+        AccountOwner accountOwner = this.accountOwnerService.createAccountOwner("Petr", "Banan");
 
-        //AccountOwnerFactory accountOwnerFactory = new AccountOwnerFactory();
-        //CreateAccountLoggerService logger = new CreateAccountLoggerService();
-
-        AccountOwner accountOwner = container.accountOwnerService.createAccountOwner("Petr", "Banan");
-        accountOwner.setLastName("Bananos");
 
         CurrencyConverterService currencyConverterService = container.currencyConverterService;
 
-        //Moje řešení
-        //-------------------------------------
-    /*
-    BankAccount businessAccount = logger.logCreation(() -> bankAccountService.createBussinesBankAccount(accountOwner, 1000));
-    BankAccount currentAccount = logger.logCreationWithTime(() -> bankAccountService.createCurrentBankAccount(accountOwner, 1000));
-    BankAccount savingAccount = logger.logCreationAll(() -> bankAccountService.createSavingBankAccount(accountOwner, 1000));
-    BankAccount studenAccount = logger.logCreationAll(() -> bankAccountService.createStudentBankAccount(accountOwner, 1000, "Delta"));
-    */
-        //---------------------------------------------
 
-        // Učitelovo řešení
-        //-----------------------------------------------------
         IBankAccountService bankAccountService = container.bankAccountService;
         IBankAccountService bankAccouontWithLoggerService = container.bankAccountWithLoggerService;
         IBankAccountService bankAccouontWithLoggerWithTimeService = container.bankAccountWithLoggerWithTimeService;

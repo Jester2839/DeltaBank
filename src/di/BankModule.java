@@ -6,6 +6,6 @@ public class BankModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        
+
     }
 }

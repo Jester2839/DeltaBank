@@ -1,5 +1,6 @@
 package person.services;
 
+import com.google.inject.Inject;
 import person.AccountOwner;
 import person.factories.AccountOwnerFactory;
 
@@ -9,11 +10,9 @@ import java.util.UUID;
 
 public class AccountOwnerService {
 
-    private final AccountOwnerFactory accountOwnerFactory;
+    @Inject
+    AccountOwnerFactory accountOwnerFactory;
 
-    public AccountOwnerService(AccountOwnerFactory accountOwnerFactory) {
-        this.accountOwnerFactory = accountOwnerFactory;
-    }
 
     List<AccountOwner> accountOwners = new LinkedList<>();
 

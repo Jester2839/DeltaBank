@@ -43,7 +43,6 @@ public class Container {
     public BankAccountSerializeFactory bankAccountSerializeFactory = new BankAccountSerializeFactory();
 
     // --- ucty a majitele ---
-    public AccountOwnerService accountOwnerService = new AccountOwnerService(accountOwnerFactory);
     public BankAccountService bankAccountService = new BankAccountService(businessAccountFactory, currentAccountFactory, savingAccountFactory, studentAccountFactory);
 
     // --- dekoratory ---
