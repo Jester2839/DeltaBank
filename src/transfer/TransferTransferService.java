@@ -2,6 +2,7 @@ package transfer;
 
 import accounts.BankAccount;
 import accounts.TransferFeePoint;
+import com.google.inject.Inject;
 import transactions.TransactionFactory;
 import transactions.TransactionStatus;
 import transactions.TransactionType;
@@ -10,15 +11,13 @@ public class TransferTransferService {
 
     // studentsky ucet jako jediny muze pri prevodu jit do zaporu, a to az do -5000
 
-    private final TransferLoggerService transferLoggerService;
-    private final TransactionFactory transactionFactory;
-    private final GetWithdrawLimitService getWithdrawLimitService;
+    @Inject
+    private TransferLoggerService transferLoggerService;
+    @Inject
+    private TransactionFactory transactionFactory;
+    @Inject
+    private GetWithdrawLimitService getWithdrawLimitService;
 
-    public TransferTransferService(TransferLoggerService transferLoggerService, TransactionFactory transactionFactory, GetWithdrawLimitService getWithdrawLimitService) {
-        this.transferLoggerService = transferLoggerService;
-        this.transactionFactory = transactionFactory;
-        this.getWithdrawLimitService = getWithdrawLimitService;
-    }
 
     public void transfer(BankAccount sourceAccount, BankAccount targetAccount, double amount){
         if (sourceAccount == null || targetAccount == null) {

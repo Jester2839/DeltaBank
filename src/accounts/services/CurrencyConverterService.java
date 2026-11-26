@@ -1,5 +1,7 @@
 package accounts.services;
 
+import com.google.inject.Inject;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -16,6 +18,7 @@ public class CurrencyConverterService {
 
     // Mapa uchovává hodnotu 1 jednotky dané měny v CZK (např. EUR -> 25.15)
     private final Map<String, Double> ratesToCzk = new HashMap<>();
+
 
     public CurrencyConverterService() {
         loadFallbackRates();

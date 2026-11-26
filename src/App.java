@@ -1,11 +1,18 @@
 import accounts.BankAccount;
 import accounts.InterestPoint;
+import accounts.serialization.BankAccountGsonSerializer;
+import accounts.serialization.BankAccountJacksonSerializer;
 import accounts.serialization.BankAccountSerializer;
+import accounts.services.BankAccountService;
 import accounts.services.CurrencyConverterService;
 import accounts.services.IBankAccountService;
+import accounts.services.decorators.BankAccountWithLoggerService;
+import accounts.services.decorators.BankAccountWithLoggerWithTimeService;
 import com.google.inject.Inject;
 import di.Container;
 import di.ContainerFactory;
+import notifier.ConsoleNotifierService;
+import notifier.EmailNotifierService;
 import notifier.NotifierService;
 import person.AccountOwner;
 import person.services.AccountOwnerService;
@@ -16,8 +23,19 @@ import transfer.WithdrawTransferService;
 
 public class App {
 
-    @Inject
-    private AccountOwnerService accountOwnerService;
+    @Inject private AccountOwnerService accountOwnerService;
+    @Inject private NotifierService notifierService;
+    @Inject private CurrencyConverterService currencyConverterService;
+    @Inject private BankAccountService bankAccountService;
+    @Inject private ConsoleNotifierService consoleNotifierService;
+    @Inject private EmailNotifierService emailNotifierService;
+    @Inject private BankAccountGsonSerializer bankAccountGsonSerializer;
+    @Inject private DepositTransferService depositTransferService;
+    @Inject private WithdrawTransferService withdrawTransferService;
+    @Inject private  TransferTransferService transferTransferService;
+    @Inject private TransferLoggerService transferLoggerService;
+
+
 
     public void run(){
         // vytvorim container
@@ -29,40 +47,37 @@ public class App {
         AccountOwner accountOwner = this.accountOwnerService.createAccountOwner("Petr", "Banan");
 
 
-        CurrencyConverterService currencyConverterService = container.currencyConverterService;
+        CurrencyConverterService currencyConverterService = this.currencyConverterService;
 
 
-        IBankAccountService bankAccountService = container.bankAccountService;
-        IBankAccountService bankAccouontWithLoggerService = container.bankAccountWithLoggerService;
-        IBankAccountService bankAccouontWithLoggerWithTimeService = container.bankAccountWithLoggerWithTimeService;
-        IBankAccountService bankAccouontWithLoggerAndWithTimeService = container.bankAccountWithLoggerAndWithTimeService;
+        IBankAccountService bankAccountService = this.bankAccountService;
+//        IBankAccountService bankAccouontWithLoggerService = this.bankAccountWithLoggerService;
+//        IBankAccountService bankAccouontWithLoggerWithTimeService = this.bankAccountWithLoggerWithTimeService;
+//        IBankAccountService bankAccouontWithLoggerAndWithTimeService = container.bankAccountWithLoggerAndWithTimeService;
 
         IO.println("Original");
         BankAccount businessAccount = bankAccountService.createBussinesBankAccount(accountOwner, 10000, "CZK");
         IO.println("Ni nenapíše");
         IO.println("==========");
         IO.println("LOGGER");
-        BankAccount currentAccount = bankAccouontWithLoggerService.createCurrentBankAccount(accountOwner, 1000, "EUR");
+        BankAccount currentAccount = bankAccountService.createCurrentBankAccount(accountOwner, 1000, "EUR");
         IO.println("==========");
         IO.println("TIME");
-        BankAccount savingAccount = bankAccouontWithLoggerWithTimeService.createSavingBankAccount(accountOwner, 1000, "USD");
+        BankAccount savingAccount = bankAccountService.createSavingBankAccount(accountOwner, 1000, "USD");
         IO.println("==========");
         IO.println("ALL");
-        BankAccount studenAccount = bankAccouontWithLoggerAndWithTimeService.createStudentBankAccount(accountOwner, 1000, "DELTA", "EUR");
+        BankAccount studenAccount = bankAccountService.createStudentBankAccount(accountOwner, 1000, "DELTA", "EUR");
         IO.println("==========");
-        //--------------------------------------------------
 
         // Zbytek Aplikace
-        BankAccountSerializer bankAccountGsonSerializer = container.bankAccountGsonSerializer;
-        BankAccountSerializer bankAccountJacksonSerializer = container.bankAccountJacksonSerializer;
+        BankAccountSerializer bankAccountGsonSerializer = this.bankAccountGsonSerializer;
 
         String bankAccountGson = bankAccountGsonSerializer.serializeAll(bankAccountService.getBankAccounts());
-        String bankAccountJackson = bankAccountJacksonSerializer.serializeAll(bankAccountService.getBankAccounts());
 
 
         IO.println("");
         IO.println(bankAccountGson);
-        IO.println(bankAccountJackson);
+
 
 
 
@@ -76,15 +91,15 @@ public class App {
         IO.println();
 
         // jedna instance loggeru sdilena vsemi transfer sluzbami, aby historie byla kompletni
-        TransferLoggerService transferLoggerService = container.transferLoggerService;
+        TransferLoggerService transferLoggerService = this.transferLoggerService;
 
-        DepositTransferService depositTransferService = container.depositTransferService;
-        WithdrawTransferService withdrawTransferService = container.withdrawTransferService;
-        TransferTransferService transferTransferService = container.transferTransferService;
+        DepositTransferService depositTransferService = this.depositTransferService;
+        WithdrawTransferService withdrawTransferService = this.withdrawTransferService;
+        TransferTransferService transferTransferService = this.transferTransferService;
 
         // cely vystup jde pres notifier - staci vymenit implementaci a vystup vypada jinak
-        NotifierService consoleNotifierService = container.consoleNotifierService;
-        NotifierService emailNotifierService = container.emailNotifierService;
+        NotifierService consoleNotifierService = this.consoleNotifierService;
+        NotifierService emailNotifierService = this.emailNotifierService;
 
         consoleNotifierService.notify("--- Prevod 100 z business account (poplatek 0.3%) ---");
         printBalance("business pred", businessAccount, "GBP", currencyConverterService, consoleNotifierService);
@@ -132,6 +147,7 @@ public class App {
         IO.println();
         //transferLoggerService.printTransactionsByAccount(currentAccount.getAccountNumber())
     }
+
     private static void printBalance(String label, BankAccount bankAccount, String targetCurrency, CurrencyConverterService converter, NotifierService notifierService){
         double originalBalance = bankAccount.getBalance();
         String accountCurrency = bankAccount.getCurrency();

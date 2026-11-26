@@ -2,17 +2,15 @@ package accounts.factories;
 
 import accounts.BusinessAccount;
 import accounts.services.AccountNumGeneratorService;
+import com.google.inject.Inject;
 import person.AccountOwner;
 
 import java.util.UUID;
 
 public class BusinessAccountFactory {
 
-    private final AccountNumGeneratorService accountNumGeneratorService;
+    @Inject AccountNumGeneratorService accountNumGeneratorService;
 
-    public BusinessAccountFactory(AccountNumGeneratorService accountNumGeneratorService) {
-        this.accountNumGeneratorService = accountNumGeneratorService;
-    }
 
     public BusinessAccount createBusinessAccount(AccountOwner accountOwner, double balance, String currency){
 

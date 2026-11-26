@@ -2,6 +2,7 @@ package accounts.serialization;
 
 import accounts.BankAccount;
 import com.google.gson.Gson;
+import com.google.inject.Inject;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,11 +11,8 @@ public class BankAccountGsonSerializer implements BankAccountSerializer{
 
     Gson gson = new Gson();
 
-    private final BankAccountSerializeFactory bankAccountSerializeFactory;
-
-    public BankAccountGsonSerializer(BankAccountSerializeFactory bankAccountSerializeFactory) {
-        this.bankAccountSerializeFactory = bankAccountSerializeFactory;
-    }
+    @Inject
+    BankAccountSerializeFactory bankAccountSerializeFactory;
 
     public String serializeAll(List<BankAccount> bankAccounts){
         List<BankAccountSerialize> bankAccountSerializes = new LinkedList<>();

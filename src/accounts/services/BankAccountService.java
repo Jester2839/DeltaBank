@@ -5,6 +5,7 @@ import accounts.factories.BusinessAccountFactory;
 import accounts.factories.CurrentAccountFactory;
 import accounts.factories.SavingAccountFactory;
 import accounts.factories.StudentAccountFactory;
+import com.google.inject.Inject;
 import person.AccountOwner;
 
 import java.util.ArrayList;
@@ -12,20 +13,14 @@ import java.util.List;
 
 public class BankAccountService implements IBankAccountService {
 
-    private final BusinessAccountFactory businessAccountFactory;
-    private final CurrentAccountFactory currentAccountFactory;
-    private final SavingAccountFactory savingAccountFactory;
-    private final StudentAccountFactory studentAccountFactory;
+    @Inject BusinessAccountFactory businessAccountFactory;
+    @Inject CurrentAccountFactory currentAccountFactory;
+    @Inject SavingAccountFactory savingAccountFactory;
+    @Inject StudentAccountFactory studentAccountFactory;
 
     List<BankAccount> bankAccounts = new ArrayList<>();
 
-    public BankAccountService(BusinessAccountFactory businessAccountFactory, CurrentAccountFactory currentAccountFactory, SavingAccountFactory savingAccountFactory, StudentAccountFactory studentAccountFactory) {
-        this.businessAccountFactory = businessAccountFactory;
-        this.currentAccountFactory = currentAccountFactory;
-        this.savingAccountFactory = savingAccountFactory;
-        this.studentAccountFactory = studentAccountFactory;
-    }
-
+    @Override
     public BankAccount createBussinesBankAccount(AccountOwner accountOwner, double balance, String currency) {
         BankAccount bussinesAccount = businessAccountFactory.createBusinessAccount(accountOwner, balance, currency);
         this.bankAccounts.add(bussinesAccount);
@@ -33,6 +28,7 @@ public class BankAccountService implements IBankAccountService {
         return bussinesAccount;
     }
 
+    @Override
     public BankAccount createCurrentBankAccount(AccountOwner accountOwner, double balance, String currency) {
         BankAccount currentAccount = currentAccountFactory.createCurrentAccount(accountOwner, balance, currency);
         this.bankAccounts.add(currentAccount);
@@ -40,6 +36,7 @@ public class BankAccountService implements IBankAccountService {
         return currentAccount;
     }
 
+    @Override
     public BankAccount createSavingBankAccount(AccountOwner accountOwner, double balance, String currency) {
         BankAccount savingAccount = savingAccountFactory.createSavingAccount(accountOwner, balance, currency);
         this.bankAccounts.add(savingAccount);
